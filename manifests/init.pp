@@ -15,7 +15,7 @@ class minio(
 
   include 'docker'
 
-  file { ['/etc/minio','/etc/minio/certs',$minio_data_dir]
+  file { ['/etc/minio','/etc/minio/certs',$minio_data_dir] :
     ensure => directory,
   }
 
@@ -34,7 +34,7 @@ class minio(
   docker::run { $container_name :
     image   => $image_name,
     env     => ["MINIO_ACCESS_KEY=${access_key}",
-                "MINIO_SECRET_KEY=${secret_key}"]
+                "MINIO_SECRET_KEY=${secret_key}"],
     volumes => ["${minio_data_dir}:/export",
                   "/etc/minio:/root/.minio"],
     command => 'minio/minio server /export',
