@@ -9,7 +9,7 @@ class minio(
         $minio_data_dir = '/minio-data'
 ){
 
-  $image_name='minio'
+  $image_name='minio/minio'
   $container_name='minio-server'
   $diffcmd = "/usr/bin/diff <(docker image inspect --format='{{.Id}}' ${image_name}) <(docker inspect --format='{{.Image}}' ${container_name})"
 
