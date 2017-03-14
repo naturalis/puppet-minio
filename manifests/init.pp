@@ -37,7 +37,7 @@ class minio(
                 "MINIO_SECRET_KEY=${secret_key}"],
     volumes => ["${minio_data_dir}:/export",
                   "/etc/minio:/root/.minio"],
-    command => 'minio/minio server /export',
+    command => 'server /export',
     require => [File['/etc/minio/certs/public.crt'],
                 File['/etc/minio/certs/private.key'],
                 File[$minio_data_dir]
