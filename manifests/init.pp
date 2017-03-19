@@ -37,7 +37,7 @@ class minio(
     env     => ["MINIO_ACCESS_KEY=${access_key}",
                 "MINIO_SECRET_KEY=${secret_key}"],
     volumes => ["${minio_data_dir}:/export",
-                  "/etc/minio:/root/.minio"],
+                  '/etc/minio:/root/.minio'],
     command => 'server /export',
     require => [File['/etc/minio/certs/public.crt'],
                 File['/etc/minio/certs/private.key'],
@@ -46,7 +46,7 @@ class minio(
   }
 
   exec { "/bin/systemctl restart docker-${container_name}" :
-    onlyif => $diffcmd,
+    onlyif  => $diffcmd,
     require => [Exec["/usr/bin/docker pull ${image_name}"],Docker::Run[$container_name]]
   }
 
@@ -55,9 +55,9 @@ class minio(
   }
 
   schedule { 'everyday':
-    period  => daily,
-    repeat  => 1,
-    range => "7-9"
+    period => daily,
+    repeat => 1,
+    range  => '7-9',
   }
 
 }
