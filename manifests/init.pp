@@ -46,7 +46,7 @@ class minio(
   }
 
   exec { "/bin/systemctl restart docker-${container_name}" :
-    onlyif  => $diffcmd,
+    unless  => $diffcmd,
     require => [Exec["/usr/bin/docker pull ${image_name}"],Docker::Run[$container_name]]
   }
 
