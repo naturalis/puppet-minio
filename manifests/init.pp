@@ -12,7 +12,9 @@ class minio(
   $image_name='minio/minio'
   $container_name='minio-server'
   $diffcmd = "/usr/bin/diff <(docker image inspect --format='{{.Id}}' ${image_name}) <(docker inspect --format='{{.Image}}' ${container_name})"
-
+  #should add a more intelegent solution for multiple osses
+  $service_cmd = "/usr/sbin/service docker-${container_name} restart"
+  
   include 'docker'
 
   file { ['/etc/minio','/etc/minio/certs',$minio_data_dir] :
@@ -45,7 +47,7 @@ class minio(
     ]
   }
 
-  exec { "/bin/systemctl restart docker-${container_name}" :
+  exec { $service_cmd }:
     unless  => $diffcmd,
     require => [Exec["/usr/bin/docker pull ${image_name}"],Docker::Run[$container_name]]
   }
