@@ -47,7 +47,7 @@ class minio(
     ]
   }
 
-  exec { $service_cmd }:
+  exec { $service_cmd :
     unless  => $diffcmd,
     require => [Exec["/usr/bin/docker pull ${image_name}"],Docker::Run[$container_name]]
   }
