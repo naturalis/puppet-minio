@@ -6,6 +6,7 @@ class minio(
         $secret_key,
         $ssl_public_cert,
         $ssl_private_key,
+        $minio_public_port = '443',
         $minio_data_dir = '/minio-data'
 ){
 
@@ -35,7 +36,7 @@ class minio(
 
   docker::run { $container_name :
     image   => $image_name,
-    ports   => ['443:9000'],
+    ports   => ["${minio_public_port}:9000"],
     env     => ["MINIO_ACCESS_KEY=${access_key}",
                 "MINIO_SECRET_KEY=${secret_key}"],
     volumes => ["${minio_data_dir}:/export",
